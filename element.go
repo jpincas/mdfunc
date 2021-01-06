@@ -159,7 +159,7 @@ func P(els ...Element) Element {
 
 func Line(els ...Element) Element {
 	return Element{
-		Render: fmt.Sprintf("%s\n", Elements(els).Output()),
+		Render: fmt.Sprintf("\n%s", Elements(els).Output()),
 	}
 }
 
