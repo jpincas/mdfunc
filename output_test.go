@@ -28,6 +28,9 @@ func TestOutput(t *testing.T) {
 			Text("Jessi"),
 			Text("Allan"),
 		),
+		P(
+			Text("this shouldn't render"),
+		).RenderIf(false),
 	)
 
 	output := doc.Output()

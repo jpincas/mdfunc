@@ -42,6 +42,22 @@ func (el Element) WriteDoc(w io.Writer) error {
 	return err
 }
 
+func (el Element) RenderIf(doRender bool) Element {
+	if doRender {
+		return el
+	}
+
+	return Element{}
+}
+
+func (el Element) RenderIfNotBlank() Element {
+	if el.Raw != "" || el.Render != "" {
+		return el
+	}
+
+	return Element{}
+}
+
 // Elements
 
 type Elements []Element
@@ -138,6 +154,12 @@ func Text(s string) Element {
 func P(els ...Element) Element {
 	return Element{
 		Render: fmt.Sprintf("\n%s\n", Elements(els).Output()),
+	}
+}
+
+func Line(els ...Element) Element {
+	return Element{
+		Render: fmt.Sprintf("%s\n", Elements(els).Output()),
 	}
 }
 
