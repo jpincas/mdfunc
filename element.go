@@ -62,7 +62,7 @@ func (el Element) RenderIfNotBlank() Element {
 
 type Elements []Element
 
-func (els Elements) Output() string {
+func (els Elements) Output(joiner string) string {
 	var renderedEls []string
 
 	for _, el := range els {
@@ -74,15 +74,15 @@ func (els Elements) Output() string {
 		}
 	}
 
-	return strings.TrimSpace(strings.Join(renderedEls, ""))
+	return strings.TrimSpace(strings.Join(renderedEls, joiner))
 }
 
 func (els Elements) String() string {
-	return els.Output()
+	return els.Output("")
 }
 
 func (els Elements) Bytes() []byte {
-	renderedElement := els.Output()
+	renderedElement := els.Output("")
 	return []byte(renderedElement)
 }
 
@@ -135,31 +135,37 @@ func H6(s string) Element {
 
 func Bold(s string) Element {
 	return Element{
-		Render: fmt.Sprintf("**%s** ", s),
+		Render: fmt.Sprintf("**%s**", s),
 	}
 }
 
 func Italic(s string) Element {
 	return Element{
-		Render: fmt.Sprintf("*%s* ", s),
+		Render: fmt.Sprintf("*%s*", s),
 	}
 }
 
 func Text(s string) Element {
 	return Element{
-		Render: fmt.Sprintf("%s ", s),
+		Render: fmt.Sprintf("%s", s),
 	}
 }
 
 func P(els ...Element) Element {
 	return Element{
-		Render: fmt.Sprintf("\n%s\n", Elements(els).Output()),
+		Render: fmt.Sprintf("\n%s\n", Elements(els).Output("")),
+	}
+}
+
+func Span(els ...Element) Element {
+	return Element{
+		Render: Elements(els).Output(" "),
 	}
 }
 
 func Line(els ...Element) Element {
 	return Element{
-		Render: fmt.Sprintf("\n%s", Elements(els).Output()),
+		Render: fmt.Sprintf("\n%s", Elements(els).Output("")),
 	}
 }
 
@@ -171,13 +177,13 @@ func BlockQuote(s string) Element {
 
 func Link(alt, dest string) Element {
 	return Element{
-		Render: fmt.Sprintf("[%s](%s) ", alt, dest),
+		Render: fmt.Sprintf("[%s](%s)", alt, dest),
 	}
 }
 
 func Image(alt, dest string) Element {
 	return Element{
-		Render: fmt.Sprintf("![%s](%s) ", alt, dest),
+		Render: fmt.Sprintf("![%s](%s)", alt, dest),
 	}
 }
 

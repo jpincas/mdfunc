@@ -8,13 +8,16 @@ func TestOutput(t *testing.T) {
 	doc := Doc(
 		H1("Title"),
 		H2("Subtitle"),
-		Text("Just some text."),
+		P(Text("Just some text.")),
 		P(
-			Text("This is a paragraph with some"),
-			Italic("italic"),
-			Text("and some"),
-			Bold("bold"),
-			Text("text."),
+			Span(
+				Text("This is a paragraph with some"),
+				Italic("italic"),
+				Text("and some"),
+				Bold("bold"),
+				Text("text."),
+			),
+			Line(Text("And a line break.")),
 		),
 		P(
 			Text("Here is a list of links and images:"),
@@ -34,12 +37,15 @@ func TestOutput(t *testing.T) {
 		).RenderIf(false),
 	)
 
-	output := doc.Output()
+	output := doc.String()
 
 	expected := `# Title
 ## Subtitle
+
 Just some text.
+
 This is a paragraph with some *italic* and some **bold** text.
+And a line break.
 
 Here is a list of links and images:
 
