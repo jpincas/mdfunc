@@ -8,6 +8,7 @@ func TestOutput(t *testing.T) {
 	doc := Doc(
 		H1("Title"),
 		H2("Subtitle"),
+		Text("Just some text."),
 		P(
 			Text("This is a paragraph with some"),
 			Italic("italic"),
@@ -37,7 +38,7 @@ func TestOutput(t *testing.T) {
 
 	expected := `# Title
 ## Subtitle
-
+Just some text.
 This is a paragraph with some *italic* and some **bold** text.
 
 Here is a list of links and images:
@@ -51,6 +52,6 @@ Here is a list of links and images:
 3 Allan`
 
 	if output != expected {
-		t.Errorf("Output was not as expected.  Output: \n%s\n Expected: \n%s\n", output, expected)
+		t.Errorf("Output was not as expected.\n\nOutput: \n\n%s\n\n Expected: \n\n%s\n", output, expected)
 	}
 }
